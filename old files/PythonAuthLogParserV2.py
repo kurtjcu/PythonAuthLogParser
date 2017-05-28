@@ -4,7 +4,7 @@
 import socket
 
 # VARS
-log_path = 'sourcefile/smallauth.log'
+log_path = 'auth.log'
 hosts = []
 full_hosts_data = []
 previous_ip = ""
@@ -21,21 +21,22 @@ def adjust_item(str, i):
 
 # AS THE NAME SAYS
 def get_hostname(ip):
-    global previous_ip
-    global previous_host
-    if previous_ip == ip:
-        return previous_host
-    else:
-        try:
-            new_host = socket.gethostbyaddr(ip)
-            previous_ip = ip
-            previous_host = new_host[0]
-            return new_host[0]
-        except Exception:
-            new_host = ip
-            previous_ip = ip
-            previous_host = ip
-            return new_host
+    return ip
+    # global previous_ip
+    # global previous_host
+    # if previous_ip == ip:
+    #     return previous_host
+    # else:
+    #     try:
+    #         new_host = socket.gethostbyaddr(ip)
+    #         previous_ip = ip
+    #         previous_host = new_host[0]
+    #         return new_host[0]
+    #     except Exception:
+    #         new_host = ip
+    #         previous_ip = ip
+    #         previous_host = ip
+    #         return new_host
 
 
 # RETURNING FIRST FIVE ACCOUNTS AND NUMBER OF ALL ACCOUNTS TRIED
