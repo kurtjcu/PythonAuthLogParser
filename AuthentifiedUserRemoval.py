@@ -1,70 +1,70 @@
-from Host import Host
 
 
-class FileReader:
-    hosts = []
 
-    def __init__(self, file_path):
-        with open(file_path, 'rt') as log:
-            text = log.read()
+class AuthenticatedUserRemoval:
+    auth_users = []
+    source_file = ''
+    destination_file_path = ''
 
+    def __init__(self, source_file_path, destination_file_path):
+        self.destination_file_path = destination_file_path
+        with open(source_file_path, 'rt') as log:
+            self.source_file = log.read()
+            log.close()
+            self.collect_usernames()
+
+            if len(self.auth_users) > 0:
+                self.write_new_file()
+                print("new file without authorised users hasd been written")
+            else:
+                destination_file = open(self.destination_file_path, 'w')
+                destination_file.write(self.source_file)
+                print("source written directly to destination as no auth users found")
+                destination_file.close()
+
+
+
+
+    def collect_usernames(self):
         # COLLECTING HOSTS AND IPS
-        for line in text.split("\n"):
+        for line in self.source_file.split("\n"):
 
             if len(line) > 5:
                 # PARSE LINE AND ADJUST FIELD LENGTH
-                check_1 = line.find("cron:session")
-                check_2 = line.find("Disconnecting")
-                check_3 = line.find("Address")
-                check_4 = line.find("repeated")
-                if check_1 == -1 and check_2 == -1 and check_3 == -1 and check_4 == -1:
-                    break_in = line.find("Failed password")
-                    if break_in != -1:
-                        words = line.split(" from ")
-                        words2 = (words[1]).split(" port ")
+                check_1 = line.find("Accepted password for ")
+                # check_2 = line.find("Disconnecting")
+                # check_3 = line.find("Address")
+                # check_4 = line.find("repeated")
+                if check_1 > -1:
+                    words = line.split("Accepted password for ")
+                    words2 = (words[1]).split(" from ")
+                    username = words2[0]
 
-                        ip = words2[0]
-                        port = self.get_ports(line)  # GET PORT USED
-                        datetime = self.get_date(line)  # GET DATE
-                        username = self.get_username(line)
+                    if not (username in self.auth_users):
+                        self.auth_users.append(username)
 
-                        # print("ip " + ip)
-                        # print("port " + port)
-                        # print("date " + datetime)
-                        # print("username " + username)
-
-                        host = Host(ip, port, username, datetime)
-                        self.hosts.append(host)
         i = 0
-        for host in self.hosts:
+        for user in self.auth_users:
             i = i + 1
             print str(i)
-            print host.get_csv()
+            print user
 
-    @staticmethod
-    def get_date(my_line):
-        date_words = my_line.split(":")
-        date = date_words[0] + ":" + date_words[1] + ":" + ((date_words[2]).split(" "))[0]
-        return date
+    def write_new_file(self):
+        destination_file = open(self.destination_file_path, 'w')
+        for line in self.source_file.split("\n"):
+            if len(line) > 5:
+                line_has_auth_user = False
+                for user in self.auth_users:
+                    if not line_has_auth_user and user in line:
+                        line_has_auth_user = True
+                    else:
+                        destination_file.write(line + '\n')
 
-    @staticmethod
-    def get_ports(my_line):
-        port_words = my_line.split(" port ")
-        port = (port_words[1]).split(" ")
-        return port[0]
+        print(destination_file)
+        destination_file.close()
 
-    @staticmethod
-    def get_username(my_line):
-
-        if my_line.find("Failed password for invalid user ") == -1:
-            username_words = my_line.split("Failed password for ")
-        else:
-            username_words = my_line.split("Failed password for invalid user ")
-
-        username = (username_words[1]).split(" ")
-        return username[0]
 
 
 if __name__ == "__main__":
     # execute only if run as a script
-    testFile_reader = FileReader("Source_files/auth.log")
+    testAuthUserRemoval = AuthenticatedUserRemoval("Source_files/auth.log", "Source_files/UnAuthorisedOnly.log")

@@ -35,22 +35,22 @@ class Host:
         #     'country_name': 'United States',
         #     'continent': 'NA'
         # }
-        if self.ip_location_info == None:
+        if self.ip_location_info is None:
             self.ip_location_info = {
-            'city': u'None',
-            'region_code': u'None',
-            'area_code': 0,
-            'time_zone': 'None',
-            'dma_code': 0,
-            'metro_code': 'none, none',
-            'country_code3': 'none',
-            'latitude': 0,
-            'postal_code': u'none',
-            'longitude': 0,
-            'country_code': 'None',
-            'country_name': 'None',
-            'continent': 'NA'
-        }
+                'city': u'None',
+                'region_code': u'None',
+                'area_code': 0,
+                'time_zone': 'None',
+                'dma_code': 0,
+                'metro_code': 'none, none',
+                'country_code3': 'none',
+                'latitude': 0,
+                'postal_code': u'none',
+                'longitude': 0,
+                'country_code': 'None',
+                'country_name': 'None',
+                'continent': 'NA'
+            }
 
     def get_ip(self):
         return self.ip
@@ -68,7 +68,7 @@ class Host:
         country = self.ip_location_info['country_name']
         if country == None:
             country = "None"
-        return  country
+        return country
 
     def get_latitude(self):
         return str(self.ip_location_info['latitude'])
