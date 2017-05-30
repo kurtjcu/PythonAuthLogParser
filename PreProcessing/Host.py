@@ -16,7 +16,7 @@ class Host:
         self.username = username
         self.date_time = datetime.strptime("2017 " + date, "%Y %b %d %H:%M:%S")
 
-        gi = pygeoip.GeoIP('Databases/GeoLiteCity.dat')
+        gi = pygeoip.GeoIP('../Databases/GeoLiteCity.dat')
 
         # self.country = gi.country_code_by_addr(ip)
         self.ip_location_info = gi.record_by_addr(ip)
@@ -38,18 +38,18 @@ class Host:
         # }
         if self.ip_location_info is None:
             self.ip_location_info = {
-                'city': u'None',
-                'region_code': u'None',
+                'city': u'none',
+                'region_code': u'none',
                 'area_code': 0,
-                'time_zone': 'None',
+                'time_zone': 'none',
                 'dma_code': 0,
                 'metro_code': 'none, none',
-                'country_code3': 'none',
-                'latitude': 0,
+                'country_code3': 'None',
+                'latitude': -100000,
                 'postal_code': u'none',
-                'longitude': 0,
-                'country_code': 'None',
-                'country_name': 'None',
+                'longitude': -100000,
+                'country_code': 'none',
+                'country_name': 'none',
                 'continent': 'NA'
             }
             Host.did_not_find_count = Host.did_not_find_count + 1
@@ -67,21 +67,35 @@ class Host:
     def get_date_time(self):
         return self.date_time
 
+    def get_date(self):
+        return self.date_time.date()
+
+    def get_day(self):
+        return self.date_time.weekday()
+
+    def get_time(self):
+        return self.date_time.time()
+
+    def get_hour(self):
+        return self.date_time.hour
+
     def get_country(self):
         country = self.ip_location_info['country_name']
-        if country == None:
+        if country is None:
             country = "None"
         return country
 
     def get_latitude(self):
-        return str(self.ip_location_info['latitude'])
+        lat = self.ip_location_info['latitude']
+        #lat.strip(',')
+        return str(lat)
 
     def get_longitude(self):
         return str(self.ip_location_info['longitude'])
 
     def get_city(self):
         city = self.ip_location_info['city']
-        if city == None:
+        if city is None:
             city = "None"
         return city
 
@@ -98,7 +112,7 @@ class Host:
 
 if __name__ == "__main__":
     # execute only if run as a script
-    testHost = Host("110.72.25.174", "8080", "test_username", "Apr 19 15:56:30")
+    testHost = Host("182.162.82.163", "8080", "test_username", "Apr 19 15:56:30")
 
     print ("ip = " + testHost.get_ip())
     print ("port = " + testHost.get_port())

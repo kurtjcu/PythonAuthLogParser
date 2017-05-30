@@ -15,7 +15,7 @@ class AuthenticatedUserRemoval:
 
             if len(self.auth_users) > 0:
                 self.write_new_file()
-                print("new file without authorised users hasd been written")
+                print("new file without authorised users has been written")
             else:
                 destination_file = open(self.destination_file_path, 'w')
                 destination_file.write(self.source_file)

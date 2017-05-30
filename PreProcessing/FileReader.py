@@ -38,10 +38,13 @@ class FileReader:
         i = 0
         for host in self.hosts:
             i = i + 1
-            print str(i)
-            print host.get_csv()
+            print (str(i))
+            print (host.get_csv())
 
         print("Number of IP Addresses not found = " + str(Host.did_not_find_count))
+
+    def get_hosts(self):
+        return self.hosts
 
     @staticmethod
     def get_date(my_line):
@@ -65,6 +68,10 @@ class FileReader:
 
         username = (username_words[1]).split(" ")
         return username[0]
+
+    @staticmethod
+    def get_field_names():
+        return ["Date", "Time", "IP Address", "Port", "username", "Country", "City", "Longitude", "Latitude"]
 
 
 if __name__ == "__main__":
