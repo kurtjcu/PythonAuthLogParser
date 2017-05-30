@@ -8,6 +8,7 @@ class Host:
     username = ""
     date_time = ''
     ip_location_info = ''
+    did_not_find_count = 0
 
     def __init__(self, ip, port, username, date):
         self.ip = ip
@@ -51,6 +52,8 @@ class Host:
                 'country_name': 'None',
                 'continent': 'NA'
             }
+            Host.did_not_find_count = Host.did_not_find_count + 1
+
 
     def get_ip(self):
         return self.ip

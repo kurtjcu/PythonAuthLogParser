@@ -41,6 +41,8 @@ class FileReader:
             print str(i)
             print host.get_csv()
 
+        print("Number of IP Addresses not found = " + str(Host.did_not_find_count))
+
     @staticmethod
     def get_date(my_line):
         date_words = my_line.split(":")
