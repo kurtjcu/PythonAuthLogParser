@@ -12,7 +12,7 @@ class Host:
 
     def __init__(self, ip, port, username, date):
         self.ip = ip
-        self.port = port
+        self.port = int(float(port))
         self.username = username
         self.date_time = datetime.strptime("2017 " + date, "%Y %b %d %H:%M:%S")
 
@@ -101,7 +101,7 @@ class Host:
 
     def get_csv(self):
         return self.get_ip() + ',' \
-               + self.get_port() + ',' \
+               + str(self.get_port()) + ',' \
                + self.get_username() + ',' \
                + self.get_date_time().__str__() + ',' \
                + self.get_country() + ',' \
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     testHost = Host("189.36.240.195", "8080", "test_username", "Apr 19 15:56:30")
 
     print ("ip = " + testHost.get_ip())
-    print ("port = " + testHost.get_port())
+    print ("port = " + str(testHost.get_port()))
     print ("username = " + testHost.get_username())
     print ("date and time = " + testHost.get_date_time().__str__())
     print ("country = " + testHost.get_country())
