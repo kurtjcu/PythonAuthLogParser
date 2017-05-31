@@ -28,10 +28,7 @@ class FileReader:
                         datetime = self.get_date(line)  # GET DATE
                         username = self.get_username(line)
 
-                        # print("ip " + ip)
-                        # print("port " + port)
-                        # print("date " + datetime)
-                        # print("username " + username)
+
 
                         host = Host(ip, port, username, datetime)
                         self.hosts.append(host)
@@ -71,9 +68,9 @@ class FileReader:
 
     @staticmethod
     def get_field_names():
-        return ["Date", "Time", "IP Address", "Port", "username", "Country", "City", "Longitude", "Latitude"]
+        return ["DayOfWeek", "TimeOfDay", "ScaledTime" "IP_AsRank", "IP_AsAttackCount", "IP_AsRandomInt" "Port", "UName_AsRank", "UName_AsRandomInt",  "Country", "City", "Loc_X", "Loc_Y", "Loc_Z"]
 
 
 if __name__ == "__main__":
     # execute only if run as a script
-    testFile_reader = FileReader("Source_files/auth.log")
+    testFile_reader = FileReader("../Source_files/smallUnauthOnly.log") #Source_files/smallUnauthOnly.log

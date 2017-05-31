@@ -112,7 +112,7 @@ class Host:
 
 if __name__ == "__main__":
     # execute only if run as a script
-    testHost = Host("182.162.82.163", "8080", "test_username", "Apr 19 15:56:30")
+    testHost = Host("189.36.240.195", "8080", "test_username", "Apr 19 15:56:30")
 
     print ("ip = " + testHost.get_ip())
     print ("port = " + testHost.get_port())
