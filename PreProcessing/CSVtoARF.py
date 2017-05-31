@@ -2,16 +2,19 @@
 # CSV to ARFF #
 ###############
 import csv
+import os
 from time import sleep
 
 
 class convert(object):
     path_to_source = ''
+    path_to_destination = ''
     content = []
     name = 'someshit'
 
-    def __init__(self, path_to_source):
+    def __init__(self, path_to_source, path_to_destination):
         self.path_to_source = path_to_source
+        self.path_to_destination = path_to_destination
         self.csvInput(path_to_source)
         self.arffOutput()
         print ('\nFinished.')
@@ -22,6 +25,10 @@ class convert(object):
 
     # import CSV
     def csvInput(self, path_to_source):
+
+        filename = os.path.basename(self.path_to_destination)
+
+        self.name = filename.replace('.csv', '')
 
 
         print('Opening CSV file.')
@@ -47,7 +54,7 @@ class convert(object):
     def arffOutput(self):
         print ('Converting to ARFF file.\n')
         title = str(self.name) + '.arff'
-        new_file = open(title, 'w')
+        new_file = open(self.path_to_destination, 'w')
 
         ##
         # following portions formats and writes to the new ARFF file
@@ -90,4 +97,4 @@ class convert(object):
 #####
 if __name__ == "__main__":
     # execute only if run as a script
-    run = convert("../Source_files/someshit.csv")
+    run = convert("../Source_files/smallCSV.csv", "../Source_files/smallCSV.arff")

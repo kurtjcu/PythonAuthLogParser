@@ -28,7 +28,6 @@ class ToCSV:
     port_max = 0
     port_min = 0
 
-
     def __init__(self, source, source_field_names, destination_file_path):
         self.destination_file_path = destination_file_path
         self.source = source
@@ -97,7 +96,6 @@ class ToCSV:
         for index in range(len(uname_as_random)):
             uname_as_random_int[uname_as_random[index]] = index
 
-
         # set max and min for all
         self.date_time_max = max(date_time_all)
         self.date_time_min = min(date_time_all)
@@ -116,29 +114,27 @@ class ToCSV:
         self.port_max = max(port_all)
         self.port_min = min(port_all)
 
-        print (self.date_time_max)
-        print (self.date_time_min)
-
-
-
-
+        print(self.date_time_max)
+        print(self.date_time_min)
 
         # write each row
         for attack in self.source:
-
-            position = LatLonTo3DCart.LatLonTo3DCart.get_coords(float(attack.get_latitude()),float(attack.get_longitude()) )
+            position = LatLonTo3DCart.LatLonTo3DCart.get_coords(float(attack.get_latitude()),
+                                                                float(attack.get_longitude()))
 
             host_as_string = attack.get_day().__str__() + "," \
                              + attack.get_hour().__str__() + "," \
-                             + str(self.normalise(self.date_time_max, self.date_time_min,  self.get_seconds_since_epoc(attack))) + ',' \
+                             + str(
+                self.normalise(self.date_time_max, self.date_time_min, self.get_seconds_since_epoc(attack))) + ',' \
                              + '\"\"\"' + str(attack.get_ip()) + '\"\"\"' + "," \
-                             + str(self.normalise(self.ip_rank_max, self.ip_rank_min,  ip_address_as_dict_ordered_by_rank.get(attack.get_ip()))) + ',' \
+                             + str(self.normalise(self.ip_rank_max, self.ip_rank_min,
+                                                  ip_address_as_dict_ordered_by_rank.get(attack.get_ip()))) + ',' \
                              + str(self.normalise(self.ip_count_max, self.ip_count_min,
                                                   ip_address_dict_with_count.get(attack.get_ip()))) + ',' \
                              + str(self.normalise(self.ip_int_max, self.ip_int_min,
                                                   ip_addresses_as_random_int.get(attack.get_ip()))) + ',' \
                              + str(attack.get_port()) + "," \
-                             + str(self.normalise(self.port_max, self.port_min,attack.get_port())) + "," \
+                             + str(self.normalise(self.port_max, self.port_min, attack.get_port())) + "," \
                              + '\"\"\"' + str(attack.get_username()) + '\"\"\"' + "," \
                              + str(self.normalise(self.uname_rank_max, self.uname_rank_min,
                                                   uname_as_dict_ordered_by_rank.get(attack.get_username()))) + ',' \
@@ -164,14 +160,14 @@ class ToCSV:
 
         return temp_array
 
-    def normalise(self,max,min,value):
+    def normalise(self, max, min, value):
         return (value - min) / (max - min)
-
 
     def get_seconds_since_epoc(self, host):
         date_time = host.get_date_time()
         epoc = datetime.datetime.utcfromtimestamp(0)
         return (date_time - epoc).total_seconds()
+
 
 if __name__ == "__main__":
     # execute only if run as a script
@@ -179,5 +175,5 @@ if __name__ == "__main__":
     source_file_reader = FileReader.FileReader("../Source_files/UnAuthorisedOnly.log")
     source = source_file_reader.get_hosts()
 
-    my_csv = ToCSV(source, source_field_names, "../Source_files/unAuth.csv")
+    my_csv = ToCSV(source, source_field_names, "../Source_files/fullCSV.csv")
     my_csv.write_new_file()

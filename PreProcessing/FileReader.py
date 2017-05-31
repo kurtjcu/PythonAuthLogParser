@@ -68,7 +68,7 @@ class FileReader:
 
     @staticmethod
     def get_field_names():
-        return ["DayOfWeek", "TimeOfDay", "ScaledTime", "IP_Address", "IP_AsRank", "IP_AsAttackCount", "IP_AsRandomInt", "Port", "PortNormalised", "Uname", "UName_AsRank", "UName_AsRandomInt",  "Country", "City", "Loc_X", "Loc_Y", "Loc_Z"]
+        return ["DayOfWeek", "TimeOfDay", "ScaledTime", "IP_Address", "IP_AsRank", "IP_AsAttackCount", "IP_AsRandomInt", "Port", "PortNormalised", "Uname", "UName_AsRank", "UName_AsCount", "UName_AsRandomInt",  "Country", "City", "Loc_X", "Loc_Y", "Loc_Z"]
 
 
 if __name__ == "__main__":
