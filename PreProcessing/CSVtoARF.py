@@ -97,4 +97,4 @@ class convert(object):
 #####
 if __name__ == "__main__":
     # execute only if run as a script
-    run = convert("../Source_files/smallCSV.csv", "../Source_files/smallCSV.arff")
+    run = convert("../Source_files/fullCSV.csv", "../Source_files/fullCSV.arff")
