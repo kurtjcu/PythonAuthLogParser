@@ -73,11 +73,11 @@ class ToCSV:
 
         # ipAddressAsRank
         ip_address_as_dict_ordered_by_rank = OrderedDict(
-            sorted(ip_address_dict_with_count.items(), reverse=False, key=itemgetter(1)))
+            sorted(ip_address_dict_with_count.items(), reverse=True, key=itemgetter(1)))
         print("backwards ip Dict = " + str(ip_address_as_dict_ordered_by_rank))
 
         uname_as_dict_ordered_by_rank = OrderedDict(
-            sorted(uname_dict_with_count.items(), reverse=False, key=itemgetter(1)))
+            sorted(uname_dict_with_count.items(), reverse=True, key=itemgetter(1)))
         print("backwards uname Dict = " + str(uname_as_dict_ordered_by_rank))
 
         # IPAddressesAsRandomInt
@@ -99,14 +99,14 @@ class ToCSV:
         # set max and min for all
         self.date_time_max = max(date_time_all)
         self.date_time_min = min(date_time_all)
-        self.ip_rank_max = max(ip_address_as_dict_ordered_by_rank.values())
-        self.ip_rank_min = min(ip_address_as_dict_ordered_by_rank.values())
+        self.ip_rank_max = len(ip_address_as_dict_ordered_by_rank)
+        self.ip_rank_min = 0
         self.ip_count_max = max(ip_address_dict_with_count.values())
         self.ip_count_min = min(ip_address_dict_with_count.values())
         self.ip_int_max = max(ip_addresses_as_random_int.values())
         self.ip_int_min = min(ip_addresses_as_random_int.values())
-        self.uname_rank_max = max(uname_as_dict_ordered_by_rank.values())
-        self.uname_rank_min = min(uname_as_dict_ordered_by_rank.values())
+        self.uname_rank_max = len(uname_as_dict_ordered_by_rank)
+        self.uname_rank_min = 0
         self.uname_count_max = max(uname_dict_with_count.values())
         self.uname_count_min = min(uname_dict_with_count.values())
         self.uname_int_max = max(uname_as_random_int.values())
@@ -121,14 +121,18 @@ class ToCSV:
         for attack in self.source:
             position = LatLonTo3DCart.LatLonTo3DCart.get_coords(float(attack.get_latitude()),
                                                                 float(attack.get_longitude()))
+            seconds_since_start = self.get_seconds_since_epoc(attack)
 
             host_as_string = attack.get_day().__str__() + "," \
                              + attack.get_hour().__str__() + "," \
+                             + str(int(seconds_since_start / (60 * 60))) + ',' \
+                             + str(int(seconds_since_start / (60 * 60 * 24))) + ',' \
                              + str(
-                self.normalise(self.date_time_max, self.date_time_min, self.get_seconds_since_epoc(attack))) + ',' \
+                self.normalise(self.date_time_max, self.date_time_min, seconds_since_start)) + ',' \
                              + '\"\"\"' + str(attack.get_ip()) + '\"\"\"' + "," \
                              + str(self.normalise(self.ip_rank_max, self.ip_rank_min,
-                                                  ip_address_as_dict_ordered_by_rank.get(attack.get_ip()))) + ',' \
+                                                  list(ip_address_as_dict_ordered_by_rank.keys()).index(
+                                                      attack.get_ip()))) + ',' \
                              + str(self.normalise(self.ip_count_max, self.ip_count_min,
                                                   ip_address_dict_with_count.get(attack.get_ip()))) + ',' \
                              + str(self.normalise(self.ip_int_max, self.ip_int_min,
@@ -137,7 +141,8 @@ class ToCSV:
                              + str(self.normalise(self.port_max, self.port_min, attack.get_port())) + "," \
                              + '\"\"\"' + str(attack.get_username()) + '\"\"\"' + "," \
                              + str(self.normalise(self.uname_rank_max, self.uname_rank_min,
-                                                  uname_as_dict_ordered_by_rank.get(attack.get_username()))) + ',' \
+                                                  list(uname_as_dict_ordered_by_rank.keys()).index(
+                                                      attack.get_username()))) + ',' \
                              + str(self.normalise(self.uname_count_max, self.uname_count_min,
                                                   uname_dict_with_count.get(attack.get_username()))) + ',' \
                              + str(self.normalise(self.uname_int_max, self.uname_int_min,
