@@ -68,9 +68,9 @@ class FileReader:
 
     @staticmethod
     def get_field_names():
-        return ["DayOfWeek", "TimeOfDay", "HourSinceStart", "DaySinceStart" "ScaledTime", "IP_Address", "IP_AsRank", "IP_AsAttackCount", "IP_AsRandomInt", "Port", "PortNormalised", "Uname", "UName_AsRank", "UName_AsCount", "UName_AsRandomInt",  "Country", "City", "Loc_X", "Loc_Y", "Loc_Z"]
+        return ["DayOfWeek", "TimeOfDay", "HourSinceStart", "DaySinceStart", "ScaledTime", "IP_Address", "IP_AsRank", "IP_AsAttackCount", "IP_AsRandomInt", "Port", "PortNormalised", "Uname", "UName_AsRank", "UName_AsCount", "UName_AsRandomInt",  "Country", "City", "Loc_X", "Loc_Y", "Loc_Z"]
 
 
 if __name__ == "__main__":
     # execute only if run as a script
-    testFile_reader = FileReader("../Source_files/smallUnauthOnly.log") #Source_files/smallUnauthOnly.log
+    testFile_reader = FileReader("../Source_files/UnAuthorisedOnly.log") #Source_files/smallUnauthOnly.log

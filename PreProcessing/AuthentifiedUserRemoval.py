@@ -46,8 +46,8 @@ class AuthenticatedUserRemoval:
         i = 0
         for user in self.auth_users:
             i = i + 1
-            print str(i)
-            print user
+            print (str(i))
+            print (user)
 
     def write_new_file(self):
         destination_file = open(self.destination_file_path, 'w')
@@ -67,4 +67,4 @@ class AuthenticatedUserRemoval:
 
 if __name__ == "__main__":
     # execute only if run as a script
-    testAuthUserRemoval = AuthenticatedUserRemoval("Source_files/auth.log", "Source_files/UnAuthorisedOnly.log")
+    testAuthUserRemoval = AuthenticatedUserRemoval("../Source_files/auth.log", "../Source_files/UnAuthorisedOnly.log")

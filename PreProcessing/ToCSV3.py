@@ -121,14 +121,14 @@ class ToCSV:
         for attack in self.source:
             position = LatLonTo3DCart.LatLonTo3DCart.get_coords(float(attack.get_latitude()),
                                                                 float(attack.get_longitude()))
-            seconds_since_start = self.get_seconds_since_epoc(attack)
+            seconds_since_start = self.get_seconds_since_epoc(attack) - self.date_time_min
 
             host_as_string = attack.get_day().__str__() + "," \
                              + attack.get_hour().__str__() + "," \
                              + str(int(seconds_since_start / (60 * 60))) + ',' \
                              + str(int(seconds_since_start / (60 * 60 * 24))) + ',' \
                              + str(
-                self.normalise(self.date_time_max, self.date_time_min, seconds_since_start)) + ',' \
+                self.normalise(self.date_time_max, self.date_time_min, self.get_seconds_since_epoc(attack))) + ',' \
                              + '\"\"\"' + str(attack.get_ip()) + '\"\"\"' + "," \
                              + str(self.normalise(self.ip_rank_max, self.ip_rank_min,
                                                   list(ip_address_as_dict_ordered_by_rank.keys()).index(
