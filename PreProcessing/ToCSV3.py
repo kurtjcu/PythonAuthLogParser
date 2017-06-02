@@ -1,6 +1,7 @@
 import datetime
 import math
 from operator import itemgetter
+import numpy as np
 
 from PreProcessing import Host, FileReader, LatLonTo3DCart
 from collections import Counter, OrderedDict
@@ -133,6 +134,9 @@ class ToCSV:
                              + str(self.normalise(self.ip_rank_max, self.ip_rank_min,
                                                   list(ip_address_as_dict_ordered_by_rank.keys()).index(
                                                       attack.get_ip()))) + ',' \
+                             + str(self.normalise(math.log(self.ip_rank_max), math.log(0.0000000001),
+                                                  self.log_scaling(list(ip_address_as_dict_ordered_by_rank.keys()).index(
+                                                      attack.get_ip())))) + ',' \
                              + str(self.normalise(self.ip_count_max, self.ip_count_min,
                                                   ip_address_dict_with_count.get(attack.get_ip()))) + ',' \
                              + str(self.normalise(self.ip_int_max, self.ip_int_min,
@@ -143,6 +147,9 @@ class ToCSV:
                              + str(self.normalise(self.uname_rank_max, self.uname_rank_min,
                                                   list(uname_as_dict_ordered_by_rank.keys()).index(
                                                       attack.get_username()))) + ',' \
+                             + str(self.normalise(math.log(self.uname_rank_max), math.log(0.0000000001),
+                                                  self.log_scaling(list(uname_as_dict_ordered_by_rank.keys()).index(
+                                                      attack.get_username())))) + ',' \
                              + str(self.normalise(self.uname_count_max, self.uname_count_min,
                                                   uname_dict_with_count.get(attack.get_username()))) + ',' \
                              + str(self.normalise(self.uname_int_max, self.uname_int_min,
@@ -172,6 +179,13 @@ class ToCSV:
         date_time = host.get_date_time()
         epoc = datetime.datetime.utcfromtimestamp(0)
         return (date_time - epoc).total_seconds()
+
+    def log_scaling(self, dataset):
+        dataset = np.array(dataset)
+        return self.safe_ln(dataset)
+
+    def safe_ln(self, x, minval=0.0000000001):
+        return np.log(x.clip(min=minval))
 
 
 if __name__ == "__main__":
