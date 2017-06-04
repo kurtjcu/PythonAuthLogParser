@@ -70,7 +70,9 @@ class ToCSV:
 
         # count and create dict
         ip_address_dict_with_count = Counter(ip_addresses_all)
+        print(ip_address_dict_with_count)
         uname_dict_with_count = Counter(uname_all)
+        print(uname_dict_with_count)
 
         # ipAddressAsRank
         ip_address_as_dict_ordered_by_rank = OrderedDict(
